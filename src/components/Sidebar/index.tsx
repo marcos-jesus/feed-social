@@ -1,3 +1,4 @@
+import { PencilLine } from 'phosphor-react'
 import {
   SidebarContainer,
   ImageCover,
@@ -26,7 +27,10 @@ export function Sidebar() {
       </Profile>
 
       <Footer>
-        <ButtonProfile href="#">Editar seu perfil</ButtonProfile>
+        <ButtonProfile href="#">
+          <PencilLine size={20} />
+          Editar seu perfil
+        </ButtonProfile>
       </Footer>
     </SidebarContainer>
   )

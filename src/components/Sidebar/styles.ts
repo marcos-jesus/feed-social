@@ -56,9 +56,12 @@ export const ButtonProfile = styled.a`
   align-items: center;
   justify-content: center;
 
+  gap: 0.5rem;
+
+  transition: color 0.2s, background-color 0.2s;
+
   &:hover {
     background: ${(props) => props.theme['green-500']};
     color: ${(props) => props.theme.white};
-    font-weight: 600;
   }
 `
