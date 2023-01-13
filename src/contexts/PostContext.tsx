@@ -13,6 +13,8 @@ interface Repositories {
 
 interface PostContextType {
   data: Repositories[]
+  isFetching: boolean
+  error: Error | null
 }
 
 interface PostProviderProps {
@@ -22,11 +24,12 @@ interface PostProviderProps {
 export const PostContext = createContext({} as PostContextType)
 
 export function PostProvider({ children }: PostProviderProps) {
-  const { data } = useFetch<Repositories[]>(
-    'https://api.github.com/users/marcos-jesus/repos',
-  )
+  const { data, isFetching, error } =
+    useFetch<Repositories[]>('marcos-jesus/repos')
 
   return (
-    <PostContext.Provider value={{ data }}>{children}</PostContext.Provider>
+    <PostContext.Provider value={{ data, isFetching, error }}>
+      {children}
+    </PostContext.Provider>
   )
 }

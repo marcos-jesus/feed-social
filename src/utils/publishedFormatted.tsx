@@ -1,8 +1,19 @@
-import { format } from 'date-fns'
+import { format, formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/esm/locale/pt-BR/index.js'
 
 export function PublishedAt(date: any) {
-  return format(date, "d 'de' LLLL 'às' HH:mm'h'", {
+  const publishedDateRelativeToNow = formatDistanceToNow(date, {
+    locale: ptBR,
+    addSuffix: true,
+  })
+
+  return publishedDateRelativeToNow
+}
+
+export function publishedAtTitle(date: any) {
+  const publishedDate = format(date, "d 'de' LLLL 'de' yyyy ' às' HH:mm'h'", {
     locale: ptBR,
   })
+
+  return publishedDate
 }

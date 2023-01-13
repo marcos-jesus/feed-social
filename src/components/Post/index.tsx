@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { PostContext } from '../../contexts/PostContext'
-import { PublishedAt } from '../../utils/publishedFormatted'
+import { PublishedAt, publishedAtTitle } from '../../utils/publishedFormatted'
 import {
   PostContainer,
   PostHeader,
@@ -10,14 +10,16 @@ import {
   PostContent,
 } from './styles'
 export function Post() {
-  const { data: repositories } = useContext(PostContext)
+  const { data: repositories, isFetching, error } = useContext(PostContext)
 
   return (
     <>
       {repositories.map((repo: any) => {
         return (
           <>
+            {error && <p> Error</p>}
             <PostContainer key={repo.node_id}>
+              {isFetching && <h1> Carregando...</h1>}
               <PostHeader>
                 <PostInformation>
                   <PostImage src={repo.owner.avatar_url} />
@@ -28,7 +30,7 @@ export function Post() {
                 </PostInformation>
 
                 <time
-                  title={PublishedAt(new Date(repo.created_at))}
+                  title={publishedAtTitle(new Date(repo.created_at))}
                   dateTime={repo.created_at}
                 >
                   {PublishedAt(new Date(repo.created_at))}
