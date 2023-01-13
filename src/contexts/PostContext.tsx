@@ -1,16 +1,18 @@
-import { ReactNode, createContext, useState, useEffect } from 'react'
-import { repositoryApi } from '../lib/axios'
+import { createContext, ReactNode } from 'react'
+import { useFetch } from '../hooks/axios'
 
 interface Repositories {
   id: number
-  node_id: number
-  name: string
-  avatar_url: string
+  node_id: string
+  full_name: string
+  description: string
   type: string
-  owner: []
+  visibility: string
+  created_at: string
 }
+
 interface PostContextType {
-  repositories: Repositories | null
+  data: Repositories[]
 }
 
 interface PostProviderProps {
@@ -20,15 +22,11 @@ interface PostProviderProps {
 export const PostContext = createContext({} as PostContextType)
 
 export function PostProvider({ children }: PostProviderProps) {
-  const [repositories, setRepositories] = useState<Repositories[]>([])
-
-  useEffect(() => {
-    repositoryApi.get('/marcos-jesus/repos').then((response) => {
-      console.log(response.data)
-    })
-  }, [])
+  const { data } = useFetch<Repositories[]>(
+    'https://api.github.com/users/marcos-jesus/repos',
+  )
 
   return (
-    <PostContext.Provider value={repositories}>{children}</PostContext.Provider>
+    <PostContext.Provider value={{ data }}>{children}</PostContext.Provider>
   )
 }

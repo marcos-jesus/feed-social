@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import { userApi } from '../../lib/axios'
+import { useContext } from 'react'
+import { PostContext } from '../../contexts/PostContext'
+import { PublishedAt } from '../../utils/publishedFormatted'
 import {
   PostContainer,
   PostHeader,
@@ -9,54 +10,49 @@ import {
   PostContent,
 } from './styles'
 export function Post() {
-  interface UserProps {
-    id: number
-    name: string
-    avatar_url: string
-    type: string
-  }
-
-  const [user, setUser] = useState<UserProps[]>([])
-
-  useEffect(() => {
-    userApi.get('/marcos-jesus').then((response) => {
-      setUser([response.data])
-    })
-  }, [])
+  const { data: repositories } = useContext(PostContext)
 
   return (
-    <PostContainer>
-      {user.map((use, index) => {
+    <>
+      {repositories.map((repo: any) => {
         return (
           <>
-            <PostHeader>
-              <PostInformation key={index}>
-                <PostImage src={use.avatar_url} />
-                <PostAuthor key={use.id}>
-                  <strong>{use.name}</strong>
-                  <span>Frontend Engineer</span>
-                </PostAuthor>
-              </PostInformation>
+            <PostContainer key={repo.node_id}>
+              <PostHeader>
+                <PostInformation>
+                  <PostImage src={repo.owner.avatar_url} />
+                  <PostAuthor>
+                    <strong>{repo.owner.login}</strong>
+                    <span>Frontend Engineer</span>
+                  </PostAuthor>
+                </PostInformation>
 
-              <time
-                title="10 de Janeiro às 21:31h"
-                dateTime="2023-01-10 21:31:00"
-              >
-                Publicado há 1h
-              </time>
-            </PostHeader>
+                <time title={repo.created_at} dateTime={repo.created_at}>
+                  {PublishedAt(repo.created_at)}
+                </time>
+              </PostHeader>
+
+              <PostContent>
+                <span>
+                  Repositório: <br />
+                </span>
+                <h3>{repo.full_name}</h3>
+                {repo.description != null && (
+                  <p>
+                    Descrição: <br /> {repo.description}
+                  </p>
+                )}
+
+                {repo.description == null && (
+                  <p>
+                    Descrição: <br /> Não contém descrição!
+                  </p>
+                )}
+              </PostContent>
+            </PostContainer>
           </>
         )
       })}
-
-      <PostContent>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic
-          voluptatibus debitis cum exercitationem nostrum! Sequi magnam sint
-          doloribus. Optio veritatis fuga esse commodi, natus vitae provident!
-          Sunt obcaecati nihil quisquam.
-        </p>
-      </PostContent>
-    </PostContainer>
+    </>
   )
 }
