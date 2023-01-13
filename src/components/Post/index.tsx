@@ -15,11 +15,6 @@ export function Post() {
   return (
     <>
       {repositories.map((repo: any) => {
-        const todayDate = new Date()
-        const todayDateApi = repo.created_at
-
-        PublishedAt(todayDateApi)
-
         return (
           <>
             <PostContainer key={repo.node_id}>
@@ -32,8 +27,11 @@ export function Post() {
                   </PostAuthor>
                 </PostInformation>
 
-                <time title={repo.created_at} dateTime={repo.created_at}>
-                  {repo.created_at}
+                <time
+                  title={PublishedAt(new Date(repo.created_at))}
+                  dateTime={repo.created_at}
+                >
+                  {PublishedAt(new Date(repo.created_at))}
                 </time>
               </PostHeader>
 
