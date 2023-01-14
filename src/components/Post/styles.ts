@@ -19,6 +19,11 @@ export const PostHeader = styled.header`
     font-size: 0.875rem;
     color: ${(props) => props.theme['gray-400']};
   }
+
+  & > span {
+    font-size: 0.875rem;
+    color: ${(props) => props.theme['gray-400']};
+  }
 `
 
 export const PostInformation = styled.div`

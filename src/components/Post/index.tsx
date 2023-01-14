@@ -29,12 +29,15 @@ export function Post() {
                   </PostAuthor>
                 </PostInformation>
 
-                <time
-                  title={publishedAtTitle(new Date(repo.created_at))}
-                  dateTime={repo.created_at}
-                >
-                  {PublishedAt(new Date(repo.created_at))}
-                </time>
+                <span>
+                  Atualizado{' '}
+                  <time
+                    title={publishedAtTitle(new Date(repo.pushed_at))}
+                    dateTime={repo.pushed_at}
+                  >
+                    {PublishedAt(new Date(repo.pushed_at))}
+                  </time>
+                </span>
               </PostHeader>
 
               <PostContent>
