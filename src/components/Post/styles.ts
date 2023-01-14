@@ -23,6 +23,7 @@ export const PostHeader = styled.header`
   & > span {
     font-size: 0.875rem;
     color: ${(props) => props.theme['gray-400']};
+    cursor: pointer;
   }
 `
 
@@ -64,4 +65,9 @@ export const PostContent = styled.div`
     margin-top: 1rem;
     color: ${(props) => props.theme['gray-300']};
   }
+`
+
+export const PostRepoTitle = styled.a`
+  font-size: 1.8rem;
+  color: ${(props) => props.theme['green-500']};
 `
